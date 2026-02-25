@@ -41,35 +41,35 @@ erDiagram
         int DepartmentID FK
         int JobRoleID FK
         int EducationID FK
-        varchar AgeGroup "COMPUTED"
-        varchar Generation "COMPUTED"
-        varchar DistanceCategory "COMPUTED"
-        int AttritionBinary "COMPUTED"
+        varchar AgeGroup
+        varchar Generation
+        varchar DistanceCategory
+        int AttritionBinary
     }
 
     F_Compensation {
-        int EmployeeNumber PK_FK
+        int EmployeeNumber PK
         int MonthlyIncome
         int MonthlyRate
         int DailyRate
         int HourlyRate
-        varchar SalaryBand "COMPUTED"
+        varchar SalaryBand
     }
 
     F_Satisfaction {
-        int EmployeeNumber PK_FK
+        int EmployeeNumber PK
         int JobSatisfaction
         int EnvironmentSatisfaction
         int RelationshipSatisfaction
         int WorkLifeBalance
-        varchar JobSatisfactionLabel "COMPUTED"
-        varchar EnvironmentSatisfactionLabel "COMPUTED"
-        varchar RelationshipSatisfactionLabel "COMPUTED"
-        varchar WorkLifeBalanceLabel "COMPUTED"
+        varchar JobSatisfactionLabel
+        varchar EnvironmentSatisfactionLabel
+        varchar RelationshipSatisfactionLabel
+        varchar WorkLifeBalanceLabel
     }
 
     F_Performance {
-        int EmployeeNumber PK_FK
+        int EmployeeNumber PK
         int PerformanceRating
         int JobInvolvement
         int PercentSalaryHike
@@ -79,24 +79,24 @@ erDiagram
         int YearsInCurrentRole
         int YearsSinceLastPromotion
         int YearsWithCurrManager
-        varchar PerformanceRatingLabel "COMPUTED"
-        varchar TenureGroup "COMPUTED"
-        varchar StockOptionCategory "COMPUTED"
+        varchar PerformanceRatingLabel
+        varchar TenureGroup
+        varchar StockOptionCategory
     }
 
     F_EmployeeHistory {
-        int EmployeeNumber PK_FK
+        int EmployeeNumber PK
         int NumCompaniesWorked
         int TotalWorkingYears
-        varchar ExperienceLevel "COMPUTED"
+        varchar ExperienceLevel
     }
 
     F_JobCondition {
-        int EmployeeNumber PK_FK
+        int EmployeeNumber PK
         varchar BusinessTravel
         varchar OverTime
-        varchar BusinessTravelLabel "COMPUTED"
-        int OvertimeBinary "COMPUTED"
+        varchar BusinessTravelLabel
+        int OvertimeBinary
     }
 
     Staging_HR_Data {
