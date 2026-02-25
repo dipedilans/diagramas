@@ -1,0 +1,108 @@
+erDiagram
+    %% Hipótese 2 — hipotese_modelo_v2.sql
+    %% Padrão: D_Employee como dimensão central + 3 factos separados + 3 dimensões de lookup
+    %% Diferença chave vs H1: Employee passa a DIMENSÃO (não facto hub)
+
+    D_Department ||--o{ D_Employee : "DepartmentID"
+    D_Education ||--o{ D_Employee : "EducationID"
+    D_JobRole ||--o{ D_Employee : "JobRoleID"
+
+    D_Department ||--o{ F_Performance : "DepartmentID (denorm)"
+    D_Department ||--o{ F_Employee_History : "DepartmentID (denorm)"
+    D_JobRole ||--o{ F_Performance : "JobRoleID (denorm)"
+    D_JobRole ||--o{ F_Employee_History : "JobRoleID (denorm)"
+
+    D_Employee ||--o{ F_Satisfaction : "EmployeeID (sem FK explícito)"
+    D_Employee ||--o{ F_Performance : "EmployeeID"
+    D_Employee ||--o{ F_Employee_History : "EmployeeID"
+
+    D_Department {
+        int DepartmentID PK
+        varchar Department UK
+    }
+
+    D_JobRole {
+        int JobRoleID PK
+        varchar JobRole
+        int JobLevel
+        varchar JobLevelLabel "COMPUTED"
+    }
+
+    D_Education {
+        int EducationID PK
+        varchar Education
+        varchar Education_Level
+    }
+
+    D_Employee {
+        int EmployeeID PK
+        int Age
+        varchar Attrition
+        int DepartmentID FK
+        int DistanceFromHome
+        int EducationID FK
+        varchar Gender
+        varchar Marital_Status
+        varchar BusinessTravel
+        varchar Overtime
+        int JobRoleID FK
+        int NumCompaniesWorked
+        int TotalWorkingYears
+        int YearsAtCompany
+        int YearsInCurrentRole
+        int YearsSinceLastPromotion
+        int YearsWithCurrManager
+        int TrainingTimesLastYear
+        varchar Age_Group "COMPUTED PERSISTED"
+        varchar Distance_Category "COMPUTED PERSISTED"
+        varchar Tenure_Group "COMPUTED PERSISTED"
+        varchar Experience_Level "COMPUTED PERSISTED"
+        varchar Training_Category "COMPUTED PERSISTED"
+        varchar Promotion_Status "COMPUTED PERSISTED"
+        int Attrition_Binary "COMPUTED PERSISTED"
+        int Overtime_Binary "COMPUTED PERSISTED"
+        varchar BusinessTravel_Label "COMPUTED PERSISTED"
+    }
+
+    F_Satisfaction {
+        int SatisfactionID PK
+        int EmployeeID
+        date Inquiry_Date
+        int Environment_Satisfaction
+        int Job_Satisfaction
+        int Job_Involvement
+        int Relationship_Satisfaction
+        int Work_Life_Balance
+        int Environment_Satisfaction_N "COMPUTED PERSISTED"
+        int Job_Satisfaction_N "COMPUTED PERSISTED"
+        int Job_Involvement_N "COMPUTED PERSISTED"
+        int Relationship_Satisfaction_N "COMPUTED PERSISTED"
+        int Work_Life_Balance_N "COMPUTED PERSISTED"
+        decimal Happiness_Index "COMPUTED PERSISTED"
+    }
+
+    F_Performance {
+        int PerformanceID PK
+        int EmployeeID FK
+        int Performance_Rating
+        int DepartmentID FK
+        int JobRoleID FK
+        int Performance_Rating_N "COMPUTED PERSISTED"
+        varchar Performance_Rating_Label "COMPUTED PERSISTED"
+    }
+
+    F_Employee_History {
+        int HistoryID PK
+        int EmployeeID FK
+        int JobRoleID FK
+        int DepartmentID FK
+        date Review_Date
+        int DailyRate
+        int HourlyRate
+        int MonthlyIncome
+        int MonthlyRate
+        int StockOptionLevel
+        int SalaryHike
+        varchar Salary_Band "COMPUTED PERSISTED"
+        varchar Stock_Option_Category "COMPUTED PERSISTED"
+    }

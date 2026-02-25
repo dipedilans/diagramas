@@ -1,0 +1,138 @@
+erDiagram
+    %% Hipótese 1 — hipotese_modelo.sql
+    %% Padrão: F_Employees como hub central + tabelas de extensão 1:1 + 3 dimensões
+    %% Nota: as tabelas F_* são extensões do hub, não factos aditivos tradicionais
+
+    D_Department ||--o{ F_Employees : "DepartmentID"
+    D_JobRoles ||--o{ F_Employees : "JobRoleID"
+    D_Education ||--o{ F_Employees : "EducationID"
+
+    F_Employees ||--|| F_Compensation : "EmployeeNumber (1:1)"
+    F_Employees ||--|| F_Satisfaction : "EmployeeNumber (1:1)"
+    F_Employees ||--|| F_Performance : "EmployeeNumber (1:1)"
+    F_Employees ||--|| F_EmployeeHistory : "EmployeeNumber (1:1)"
+    F_Employees ||--|| F_JobCondition : "EmployeeNumber (1:1)"
+
+    D_Department {
+        int DepartmentID PK
+        varchar Department UK
+    }
+
+    D_JobRoles {
+        int JobRoleID PK
+        varchar JobRole
+        int JobLevel
+    }
+
+    D_Education {
+        int EducationID PK
+        int Education
+        varchar EducationField
+        varchar EducationLevel
+    }
+
+    F_Employees {
+        int EmployeeNumber PK
+        int Age
+        varchar Gender
+        varchar MaritalStatus
+        int DistanceFromHome
+        varchar Attrition
+        int DepartmentID FK
+        int JobRoleID FK
+        int EducationID FK
+        varchar AgeGroup "COMPUTED"
+        varchar Generation "COMPUTED"
+        varchar DistanceCategory "COMPUTED"
+        int AttritionBinary "COMPUTED"
+    }
+
+    F_Compensation {
+        int EmployeeNumber PK_FK
+        int MonthlyIncome
+        int MonthlyRate
+        int DailyRate
+        int HourlyRate
+        varchar SalaryBand "COMPUTED"
+    }
+
+    F_Satisfaction {
+        int EmployeeNumber PK_FK
+        int JobSatisfaction
+        int EnvironmentSatisfaction
+        int RelationshipSatisfaction
+        int WorkLifeBalance
+        varchar JobSatisfactionLabel "COMPUTED"
+        varchar EnvironmentSatisfactionLabel "COMPUTED"
+        varchar RelationshipSatisfactionLabel "COMPUTED"
+        varchar WorkLifeBalanceLabel "COMPUTED"
+    }
+
+    F_Performance {
+        int EmployeeNumber PK_FK
+        int PerformanceRating
+        int JobInvolvement
+        int PercentSalaryHike
+        int StockOptionLevel
+        int TrainingTimesLastYear
+        int YearsAtCompany
+        int YearsInCurrentRole
+        int YearsSinceLastPromotion
+        int YearsWithCurrManager
+        varchar PerformanceRatingLabel "COMPUTED"
+        varchar TenureGroup "COMPUTED"
+        varchar StockOptionCategory "COMPUTED"
+    }
+
+    F_EmployeeHistory {
+        int EmployeeNumber PK_FK
+        int NumCompaniesWorked
+        int TotalWorkingYears
+        varchar ExperienceLevel "COMPUTED"
+    }
+
+    F_JobCondition {
+        int EmployeeNumber PK_FK
+        varchar BusinessTravel
+        varchar OverTime
+        varchar BusinessTravelLabel "COMPUTED"
+        int OvertimeBinary "COMPUTED"
+    }
+
+    Staging_HR_Data {
+        int Age
+        varchar Attrition
+        varchar BusinessTravel
+        int DailyRate
+        varchar Department
+        int DistanceFromHome
+        int Education
+        varchar EducationField
+        int EmployeeCount
+        int EmployeeNumber
+        int EnvironmentSatisfaction
+        varchar Gender
+        int HourlyRate
+        int JobInvolvement
+        varchar JobLevel
+        varchar JobRole
+        int JobSatisfaction
+        varchar MaritalStatus
+        int MonthlyIncome
+        int MonthlyRate
+        int NumCompaniesWorked
+        varchar Over18
+        varchar OverTime
+        int PercentSalaryHike
+        int PerformanceRating
+        int RelationshipSatisfaction
+        int StandardHours
+        int StockOptionLevel
+        int TotalWorkingYears
+        int TrainingTimesLastYear
+        int WorkLifeBalance
+        int YearsAtCompany
+        int YearsInCurrentRole
+        int YearsSinceLastPromotion
+        int YearsWithCurrManager
+    }

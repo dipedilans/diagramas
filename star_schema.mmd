@@ -1,0 +1,83 @@
+erDiagram
+    DimEmployee ||--o{ FactSurveyResponse : "EmployeeSK"
+    DimEmployee ||--o{ FactAttrition : "EmployeeSK"
+    DimOrganization ||--o{ DimEmployee : "OrganizationSK"
+    DimOrganization ||--o{ FactSurveyResponse : "OrganizationSK"
+    DimOrganization ||--o{ FactAttrition : "OrganizationSK"
+    DimDate ||--o{ FactSurveyResponse : "DateSK"
+    DimDate ||--o{ FactAttrition : "AttritionDateSK"
+    DimSurvey ||--o{ FactSurveyResponse : "SurveySK"
+
+    DimEmployee {
+        int EmployeeSK PK
+        int EmployeeNumber UK
+        char Gender
+        int Age
+        varchar MaritalStatus
+        int Education
+        varchar EducationField
+        int DistanceFromHome
+        decimal MonthlyIncome
+        decimal YearsAtCompany
+        decimal YearsInCurrentRole
+        int StockOptionLevel
+        int PerformanceRating
+        int TrainingTimesLastYear
+        decimal PercentSalaryHike
+        bit IsOverTime
+        varchar BusinessTravel
+        bit IsAttrited
+        int OrganizationSK FK
+    }
+
+    DimOrganization {
+        int OrganizationSK PK
+        varchar Department
+        varchar JobRole
+        int JobLevel
+    }
+
+    DimDate {
+        int DateSK PK
+        date FullDate
+        int Year
+        int Quarter
+        int Month
+        bit IsSurveyDate
+    }
+
+    DimSurvey {
+        int SurveySK PK
+        varchar SurveyName
+        date SurveyDate
+        varchar SurveyType
+        int ActualResponses
+        decimal ResponseRate
+    }
+
+    FactSurveyResponse {
+        bigint SurveyResponseSK PK
+        int EmployeeSK FK
+        int SurveySK FK
+        int DateSK FK
+        int OrganizationSK FK
+        int EnvironmentSatisfaction
+        int JobSatisfaction
+        int RelationshipSatisfaction
+        int JobInvolvement
+        int WorkLifeBalance
+        decimal CompositeHappinessScore
+        decimal HappinessIndex
+    }
+
+    FactAttrition {
+        bigint AttritionSK PK
+        int EmployeeSK FK
+        int AttritionDateSK FK
+        int OrganizationSK FK
+        decimal MonthlyIncomeAtExit
+        decimal YearsAtCompanyAtExit
+        int LastPerformanceRating
+        decimal LastCompositeHappiness
+        bit OvertimeFlag
+    }
